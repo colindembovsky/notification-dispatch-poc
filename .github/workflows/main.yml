@@ -1,0 +1,15 @@
+name: notification
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: We got here
+      run: echo Hello, world!
+    - name: Dump payload
+      run: 'echo "payload: ${{ toJson(github.event.client_payload) }}"'

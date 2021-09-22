@@ -4,7 +4,7 @@ resources:
   webhooks:
     - webhook: gitHubWebHook
       connection: GitHubWebHook
-      filters:
+      #filters:
       # action is CREATED for code scanning...
       #- path: action
       #  value: created

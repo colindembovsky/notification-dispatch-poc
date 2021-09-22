@@ -6,11 +6,11 @@ resources:
       connection: GitHubWebHook
       filters:
       # action is CREATED for code scanning...
-      - path: action
-        value: created
+      #- path: action
+      #  value: created
       # ... but action is CREATE for dependabot?
-      - path: action
-        value: create
+      #- path: action
+      #  value: create
       #  - path: repositoryName      
       #    value: maven-releases     
 steps:

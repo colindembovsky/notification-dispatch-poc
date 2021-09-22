@@ -61,13 +61,13 @@ steps:
       Write-Host "##vso[task.setvariable variable=title;]$title"
       Write-Host "##vso[task.setvariable variable=description;]$description"
 
-- ${{ if eq(variables.alertType, 'codescanning') }}:
-  - bash: echo "Code scanning alert!"
-    displayName: "Code scanning"
+- bash: echo "Code scanning alert!"
+  condition: eq(variables['alertType'], 'codescanning')
+  displayName: "Code scanning"
   
-- ${{ if eq(variables.alertType, 'dependency') }}:
-  - bash: echo "Dependency alert!"
-    displayName: "Code scanning"
+- bash: echo "Dependency alert!"
+  condition: eq(variables['alertType'], 'dependency')
+  displayName: "Dependency" 
 
 - bash: |
     echo Title: $(title)

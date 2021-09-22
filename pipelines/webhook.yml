@@ -17,4 +17,4 @@ steps:
     #  Write-Host ${{ parameters.gitHubWebHook.repository.Name }} 
     script: |
       Write-Host "Triggered via webhook!"
-      Write-Host ${{ parameters.gitHubWebHook.repository }}
+      Write-Host ${{ parameters.gitHubWebHook.zen }}

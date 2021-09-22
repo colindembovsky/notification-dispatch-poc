@@ -4,18 +4,31 @@ resources:
   webhooks:
     - webhook: gitHubWebHook
       connection: GitHubWebHook
-      #filters:
+      filters:
+      - path: action
+        value: CREATED
       #  - path: repositoryName      
       #    value: maven-releases     
-      #  - path: action
-      #    value: CREATED
 steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    ### JSON payload data is available in the form of ${{ parameters.<WebhookAlias>.<JSONPath>}}
-    #  Write-Host ${{ parameters.gitHubWebHook.repository.Name }} 
     script: |
       Write-Host "Triggered via webhook!"
-      Write-Host ${{ parameters.gitHubWebHook.zen }}
-      Write-Host ${{ parameters.gitHubWebHook.repository.name }}
+      
+      # common properties
+      Write-Host "Repo name is ${{ parameters.gitHubWebHook.repository.name }}"
+      
+      # properties for code scanning alerts
+      Write-Host "Code scanning properties"
+      Write-Host "Alert URL is ${{ parameters.gitHubWebHook.alert.html_url }}"
+      Write-Host "Alert rule.name is ${{ parameters.gitHubWebHook.alert.rule.name }}"
+      Write-Host "Alert rule.description is ${{ parameters.gitHubWebHook.alert.rule.description }}"
+      Write-Host "Alert rule.full_description is ${{ parameters.gitHubWebHook.alert.rule.full_description }}"
+
+      # properties for dependabot alerts
+      Write-Host "Dependabot properties"
+      Write-Host "Alert package ${{ parameters.alert.affected_package_name }}" 
+      Write-Host "Alert range ${{ parameters.alert.affected_range }}"
+      Write-Host "Alert fixed in ${{ parameters.alert.fixed_in }}"
+      Write-Host "Alert CVE ${{ parameters.alert.external_identifier }}"

@@ -89,7 +89,8 @@ steps:
 - bash: az devops configure --defaults organization=$(System.TeamFoundationCollectionUri) project=$(System.TeamProject) --use-git-aliases true
   displayName: 'Set default Azure DevOps organization and project'
 
+# only create code scanning alerts for now
 - bash: |
     az boards work-item create --type '$(workItemType)' --description "$(description)" --title "$(title)"
-  condition: ne(variables['alertType'], '')
+  condition: eq(variables['alertType'], 'codescanning')
   displayName: 'Create Work Item'

@@ -7,10 +7,10 @@ resources:
       filters:
       # action is CREATED for code scanning...
       - path: action
-        value: CREATED
+        value: created
       # ... but action is CREATE for dependabot?
       - path: action
-        value: CREATE
+        value: create
       #  - path: repositoryName      
       #    value: maven-releases     
 steps:

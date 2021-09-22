@@ -63,13 +63,16 @@ steps:
 
 - ${{ if eq(variables.alertType, 'codescanning') }}:
   - bash: echo "Code scanning alert!"
+    displayName: "Code scanning"
   
 - ${{ if eq(variables.alertType, 'dependency') }}:
   - bash: echo "Dependency alert!"
+    displayName: "Code scanning"
 
 - bash: |
     echo Title: ${title}
     echo Description: ${description}
+  displayName: "Dump vars"
 
 - bash: az --version
   displayName: 'Show Azure CLI version'

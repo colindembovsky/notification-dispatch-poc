@@ -36,3 +36,18 @@ steps:
       Write-Host "Alert range ${{ parameters.gitHubWebHook.alert.affected_range }}"
       Write-Host "Alert fixed in ${{ parameters.gitHubWebHook.alert.fixed_in }}"
       Write-Host "Alert CVE ${{ parameters.gitHubWebHook.alert.external_identifier }}"
+
+- bash: az --version
+  displayName: 'Show Azure CLI version'
+
+- bash: echo ${AZURE_DEVOPS_CLI_PAT} | az devops login
+  env:
+    AZURE_DEVOPS_CLI_PAT: $(System.AccessToken)
+  displayName: 'Login Azure DevOps Extension'
+
+- bash: az devops configure --defaults organization=$(System.TeamFoundationCollectionUri) project=$(System.TeamProject) --use-git-aliases true
+  displayName: 'Set default Azure DevOps organization and project'
+
+- bash: |
+    az boards work-item show --id 193
+  displayName: 'Show work item'   

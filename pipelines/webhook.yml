@@ -14,6 +14,6 @@ steps:
   inputs:
     targetType: 'inline'
     ### JSON payload data is available in the form of ${{ parameters.<WebhookAlias>.<JSONPath>}}
+    #  Write-Host ${{ parameters.gitHubWebHook.repository.Name }} 
     script: |
-      Write-Host ${{ parameters.gitHubWebHook.repository.Name }} 
       Write-Host ${{ parameters.gitHubWebHook }}

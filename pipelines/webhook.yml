@@ -70,8 +70,8 @@ steps:
   displayName: "Dependency" 
 
 - bash: |
-    echo Title: $(title)
-    echo Description: $(description)
+    echo "Title: $(title)"
+    echo "Description: $(description)"
   displayName: "Dump vars"
 
 - bash: az --version

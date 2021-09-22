@@ -21,21 +21,53 @@ steps:
       Write-Host "Triggered via webhook!"
       
       # common properties
-      Write-Host "Repo name is ${{ parameters.gitHubWebHook.repository.name }}"
+      $repoName = "${{ parameters.gitHubWebHook.repository.full_name }}"
       
-      # properties for code scanning alerts
-      Write-Host "Code scanning properties"
-      Write-Host "Alert URL is ${{ parameters.gitHubWebHook.alert.html_url }}"
-      Write-Host "Alert rule.name is ${{ parameters.gitHubWebHook.alert.rule.name }}"
-      Write-Host "Alert rule.description is ${{ parameters.gitHubWebHook.alert.rule.description }}"
-      Write-Host "Alert rule.full_description is ${{ parameters.gitHubWebHook.alert.rule.full_description }}"
+      # handle code scanning alert
+      $alertUrl = "${{ parameters.gitHubWebHook.alert.html_url }}"
+      if ($alertUrl) {
+        Write-Host "Code scanning alert detected: [$alertUrl]"
+        $alertType = "codescanning"
+        
+        $ruleName = "${{ parameters.gitHubWebHook.alert.rule.name }}"
+        $shortDescription = "${{ parameters.gitHubWebHook.alert.rule.description }}"
+        $fullDescription = "${{ parameters.gitHubWebHook.alert.rule.full_description }}"
+        
+        $title = "[CodeScanning][$repoName][$ruleName] $shortDescription"
+        $description = "<div>Code scanning alert in repo <bold>$repoName</bold>.</div><div><br></div><div>URL is&nbsp;<a href=\"$alertUrl\">$alertUrl</a></div><div><br></div><div>$fullDescription</div>",
+      }
 
       # properties for dependabot alerts
-      Write-Host "Dependabot properties"
-      Write-Host "Alert package ${{ parameters.gitHubWebHook.alert.affected_package_name }}" 
-      Write-Host "Alert range ${{ parameters.gitHubWebHook.alert.affected_range }}"
-      Write-Host "Alert fixed in ${{ parameters.gitHubWebHook.alert.fixed_in }}"
-      Write-Host "Alert CVE ${{ parameters.gitHubWebHook.alert.external_identifier }}"
+      $dependencyPackage = "${{ parameters.gitHubWebHook.alert.affected_package_name }}"
+      if ($dependencyPackage) {
+        Write-Host "Dependency vulnerability alert detected for: [$dependencyPackage]"
+        $alertType = "dependency"
+        
+        $dependencyRange = "${{ parameters.gitHubWebHook.alert.affected_range }}"
+        $dependencyFixedIn = "${{ parameters.gitHubWebHook.alert.fixed_in }}"
+        $dependencyCVE = "${{ parameters.gitHubWebHook.alert.external_identifier }}"
+        $dependencySeverity = "${{ parameters.gitHubWebHook.alert.severity }}"
+        $dependencyFixedIn = "${{ parameters.gitHubWebHook.alert.fixed_in }}"
+        
+        $title = "[Depency Vulnerability][$repoName][$dependencyPackage][$severity] Vulnerability for $dependencyCVE"
+        $description = "<div>Package <bold>$dependencyPackage</bold></div><div><br></div>"
+        $description = $description + "<div>Range <bold>$dependencyRange</bold></div><div><br></div>"
+        $description = $description + "<div>Fixed in <bold>$dependencyFixedIn</bold></div><div><br></div>"
+      }
+      
+      Write-Host "##vso[task.setvariable variable=alertType;]$alertType"
+      Write-Host "##vso[task.setvariable variable=title;]$title"
+      Write-Host "##vso[task.setvariable variable=description;]$description"
+
+- ${{ if eq(variables.alertType, 'codescanning') }}:
+  - bash: echo "Code scanning alert!"
+  
+- ${{ if eq(variables.alertType, 'dependency') }}:
+  - bash: echo "Dependency alert!"
+
+- bash: |
+    echo Title: ${title}
+    echo Description: ${description}
 
 - bash: az --version
   displayName: 'Show Azure CLI version'

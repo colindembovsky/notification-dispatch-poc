@@ -21,17 +21,17 @@ steps:
       Write-Host "Triggered via webhook!"
       
       # common properties
-      $repoName = "${{ parameters.gitHubWebHook.repository.full_name }}"
+      $repoName = '${{ parameters.gitHubWebHook.repository.full_name }}'.replace("""", "'")
       
       # handle code scanning alert
-      $alertUrl = "${{ parameters.gitHubWebHook.alert.html_url }}"
+      $alertUrl = '${{ parameters.gitHubWebHook.alert.html_url }}'.replace("""", "'")
       if ($alertUrl) {
         Write-Host "Code scanning alert detected: [$alertUrl]"
         $alertType = "codescanning"
         
-        $ruleName = "${{ parameters.gitHubWebHook.alert.rule.name }}".replace("\"", "'")
-        $shortDescription = "${{ parameters.gitHubWebHook.alert.rule.description }}".replace("\"", "'")
-        $fullDescription = "${{ parameters.gitHubWebHook.alert.rule.full_description }}".replace("\"", "'")
+        $ruleName = '${{ parameters.gitHubWebHook.alert.rule.name }}'.replace("""", "'")
+        $shortDescription = '${{ parameters.gitHubWebHook.alert.rule.description }}'.replace("""", "'")
+        $fullDescription = '${{ parameters.gitHubWebHook.alert.rule.full_description }}'.replace("""", "'")
         
         $title = "[CodeScanning][$repoName][$ruleName] $shortDescription"
         $description = "<div>Code scanning alert in repo <bold>$repoName</bold>.</div><div><br></div>"
@@ -40,16 +40,16 @@ steps:
       }
 
       # properties for dependabot alerts
-      $dependencyPackage = "${{ parameters.gitHubWebHook.alert.affected_package_name }}"
+      $dependencyPackage = '${{ parameters.gitHubWebHook.alert.affected_package_name }}'.replace("""", "'")
       if ($dependencyPackage) {
         Write-Host "Dependency vulnerability alert detected for: [$dependencyPackage]"
         $alertType = "dependency"
         
-        $dependencyRange = "${{ parameters.gitHubWebHook.alert.affected_range }}".replace("\"", "'")
-        $dependencyFixedIn = "${{ parameters.gitHubWebHook.alert.fixed_in }}".replace("\"", "'")
-        $dependencyCVE = "${{ parameters.gitHubWebHook.alert.external_identifier }}".replace("\"", "'")
-        $dependencySeverity = "${{ parameters.gitHubWebHook.alert.severity }}".replace("\"", "'")
-        $dependencyFixedIn = "${{ parameters.gitHubWebHook.alert.fixed_in }}".replace("\"", "'")
+        $dependencyRange = '${{ parameters.gitHubWebHook.alert.affected_range }}'.replace("""", "'")
+        $dependencyFixedIn = '${{ parameters.gitHubWebHook.alert.fixed_in }}'.replace("""", "'")
+        $dependencyCVE = '${{ parameters.gitHubWebHook.alert.external_identifier }}'.replace("""", "'")
+        $dependencySeverity = '${{ parameters.gitHubWebHook.alert.severity }}'.replace("""", "'")
+        $dependencyFixedIn = '${{ parameters.gitHubWebHook.alert.fixed_in }}'.replace("""", "'")
         
         $title = "[Depency Vulnerability][$repoName][$dependencyPackage][$severity] Vulnerability for $dependencyCVE"
         $description = "<div>Package <bold>$dependencyPackage</bold></div><div><br></div>"

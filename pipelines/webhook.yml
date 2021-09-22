@@ -28,7 +28,7 @@ steps:
 
       # properties for dependabot alerts
       Write-Host "Dependabot properties"
-      Write-Host "Alert package ${{ parameters.alert.affected_package_name }}" 
-      Write-Host "Alert range ${{ parameters.alert.affected_range }}"
-      Write-Host "Alert fixed in ${{ parameters.alert.fixed_in }}"
-      Write-Host "Alert CVE ${{ parameters.alert.external_identifier }}"
+      Write-Host "Alert package ${{ parameters.gitHubWebHook.alert.affected_package_name }}" 
+      Write-Host "Alert range ${{ parameters.gitHubWebHook.alert.affected_range }}"
+      Write-Host "Alert fixed in ${{ parameters.gitHubWebHook.alert.fixed_in }}"
+      Write-Host "Alert CVE ${{ parameters.gitHubWebHook.alert.external_identifier }}"

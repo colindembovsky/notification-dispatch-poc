@@ -1,0 +1,18 @@
+resources:
+  # see https://docs.microsoft.com/en-us/azure/devops/pipelines/process/resources?view=azure-devops&tabs=schema#define-a-webhooks-resource
+  # for setup instructions
+  webhooks:
+    - webhook: githubTrigger
+      connection: GitHubWebHook
+      #filters:
+      #  - path: repositoryName      
+      #    value: maven-releases     
+      #  - path: action
+      #    value: CREATED
+steps:
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      Write-Host ${{ parameters.githubTrigger.repositoryName}} ### JSON payload data is available in the form of ${{ parameters.<WebhookAlias>.<JSONPath>}}
+      Write-Host ${{ parameters.githubTrigger.component.group}}

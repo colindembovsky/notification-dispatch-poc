@@ -29,9 +29,9 @@ steps:
         Write-Host "Code scanning alert detected: [$alertUrl]"
         $alertType = "codescanning"
         
-        $ruleName = "${{ parameters.gitHubWebHook.alert.rule.name }}"
-        $shortDescription = "${{ parameters.gitHubWebHook.alert.rule.description }}"
-        $fullDescription = "${{ parameters.gitHubWebHook.alert.rule.full_description }}"
+        $ruleName = "${{ parameters.gitHubWebHook.alert.rule.name }}".replace("\"", "'")
+        $shortDescription = "${{ parameters.gitHubWebHook.alert.rule.description }}".replace("\"", "'")
+        $fullDescription = "${{ parameters.gitHubWebHook.alert.rule.full_description }}".replace("\"", "'")
         
         $title = "[CodeScanning][$repoName][$ruleName] $shortDescription"
         $description = "<div>Code scanning alert in repo <bold>$repoName</bold>.</div><div><br></div>"
@@ -45,11 +45,11 @@ steps:
         Write-Host "Dependency vulnerability alert detected for: [$dependencyPackage]"
         $alertType = "dependency"
         
-        $dependencyRange = "${{ parameters.gitHubWebHook.alert.affected_range }}"
-        $dependencyFixedIn = "${{ parameters.gitHubWebHook.alert.fixed_in }}"
-        $dependencyCVE = "${{ parameters.gitHubWebHook.alert.external_identifier }}"
-        $dependencySeverity = "${{ parameters.gitHubWebHook.alert.severity }}"
-        $dependencyFixedIn = "${{ parameters.gitHubWebHook.alert.fixed_in }}"
+        $dependencyRange = "${{ parameters.gitHubWebHook.alert.affected_range }}".replace("\"", "'")
+        $dependencyFixedIn = "${{ parameters.gitHubWebHook.alert.fixed_in }}".replace("\"", "'")
+        $dependencyCVE = "${{ parameters.gitHubWebHook.alert.external_identifier }}".replace("\"", "'")
+        $dependencySeverity = "${{ parameters.gitHubWebHook.alert.severity }}".replace("\"", "'")
+        $dependencyFixedIn = "${{ parameters.gitHubWebHook.alert.fixed_in }}".replace("\"", "'")
         
         $title = "[Depency Vulnerability][$repoName][$dependencyPackage][$severity] Vulnerability for $dependencyCVE"
         $description = "<div>Package <bold>$dependencyPackage</bold></div><div><br></div>"

@@ -91,4 +91,5 @@ steps:
 
 - bash: |
     az boards work-item create --type '$(workItemType)' --description "$(description)" --title "$(title)"
+  condition: ne(variables['alertType'], '')
   displayName: 'Create Work Item'

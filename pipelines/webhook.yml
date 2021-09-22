@@ -16,4 +16,5 @@ steps:
     ### JSON payload data is available in the form of ${{ parameters.<WebhookAlias>.<JSONPath>}}
     #  Write-Host ${{ parameters.gitHubWebHook.repository.Name }} 
     script: |
+      Write-Host "Triggered via webhook!"
       Write-Host ${{ parameters.gitHubWebHook.repository }}

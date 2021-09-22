@@ -5,8 +5,10 @@ resources:
     - webhook: gitHubWebHook
       connection: GitHubWebHook
       filters:
+      # action is CREATED for code scanning...
       - path: action
         value: CREATED
+      # ... but action is CREATE for dependabot?
       - path: action
         value: CREATE
       #  - path: repositoryName      

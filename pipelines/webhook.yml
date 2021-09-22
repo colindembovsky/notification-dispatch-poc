@@ -12,7 +12,11 @@ resources:
       #- path: action
       #  value: create
       #  - path: repositoryName      
-      #    value: maven-releases     
+      #    value: maven-releases
+
+variables:
+  workItemType: User Story
+
 steps:
 - task: PowerShell@2
   inputs:
@@ -63,11 +67,11 @@ steps:
 
 - bash: echo "Code scanning alert!"
   condition: eq(variables['alertType'], 'codescanning')
-  displayName: "Code scanning"
+  displayName: "Detected Code scanning alert"
   
 - bash: echo "Dependency alert!"
   condition: eq(variables['alertType'], 'dependency')
-  displayName: "Dependency" 
+  displayName: "Detected Dependency alert" 
 
 - bash: |
     echo "Title: $(title)"
@@ -86,5 +90,5 @@ steps:
   displayName: 'Set default Azure DevOps organization and project'
 
 - bash: |
-    az boards work-item show --id 193
-  displayName: 'Show work item'   
+    az boards work-item create --type '$(workItemType)' --description "$(description)" --title "$(title)"
+  displayName: 'Create Work Item'

@@ -7,6 +7,8 @@ resources:
       filters:
       - path: action
         value: CREATED
+      - path: action
+        value: CREATE
       #  - path: repositoryName      
       #    value: maven-releases     
 steps:

@@ -34,8 +34,8 @@ steps:
         $fullDescription = "${{ parameters.gitHubWebHook.alert.rule.full_description }}"
         
         $title = "[CodeScanning][$repoName][$ruleName] $shortDescription"
-        $description = "<div>Code scanning alert in repo <bold>$($repoName)</bold>.</div><div><br></div>"
-        $description = $description + "<div>URL is&nbsp;<a href=\"$($alertUrl)\">$($alertUrl)</a></div><div><br></div>"
+        $description = "<div>Code scanning alert in repo <bold>$repoName</bold>.</div><div><br></div>"
+        $description = $description + "<div>URL is&nbsp;<a href='$alertUrl'>$alertUrl</a></div><div><br></div>"
         $description = $description + "<div>$fullDescription</div>"
       }
 

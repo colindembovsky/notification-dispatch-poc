@@ -18,7 +18,7 @@ It uses Azure Pipelines Incoming WebHook service to trigger a pipeline every tim
 
 ### 2. Create a Webhook on GitHub
 
-1. On your repository go to **Settings > Webhooks > Add webhook**
+1. In your repository go to **Settings > Webhooks > Add webhook**
 2. On **Payload URL**, fill in with your Service Connection URL created on Azure DevOps, use the following pattern 
 
 ```
@@ -39,7 +39,7 @@ Well done, you have now set the webhook trigger from GitHub and the receiving en
 
 ### 3. Create a new Pipeline on Azure DevOps
 
-1. On your Azure DevOps project got to **Pipelines > New pipeline**
+1. In your Azure DevOps project got to **Pipelines > New pipeline**
 2. Select where is your repo
 3. Select the respective repo
 4. Select **Starter pipeline**
